@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "standalone", // ✅ statik export değil, Node server function çalıştır
 };
 
 export default nextConfig;
