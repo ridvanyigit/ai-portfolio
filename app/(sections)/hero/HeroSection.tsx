@@ -32,7 +32,7 @@ export default function HeroSection() {
             href="#contact"
             className="px-6 py-3 rounded-full border border-white/50 text-white font-semibold hover:bg-white/10 transition"
           >
-            Let's Talk
+            Let&apos;s Talk
           </a>
         </div>
       </motion.div>
