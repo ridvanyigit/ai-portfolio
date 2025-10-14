@@ -4,7 +4,7 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
 
-    // 1️⃣ Google Apps Script'e JSON gönder
+    // 1️⃣ Send JSON to Google Apps Script
     const scriptUrl =
       "https://script.google.com/macros/s/AKfycbyhWIr1KHeInHbvI-LdFjb7pNZTFTarrE27kWwNLO-dmx1GSHHcm0OJ5xJAOt-3WNV4/exec";
 
@@ -22,12 +22,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Failed to submit form" }, { status: 500 });
     }
 
-    // 2️⃣ Pushover bildirimi gönder (Doğru ve hatasız yöntem)
+    // 2️⃣ Pushover Notification
     
-    // Gelen isteğin kendi başlıklarını (headers) kullan
     const requestHeaders = req.headers;
     const host = requestHeaders.get('host');
-    // Vercel'in hangi protokolü kullandığını 'x-forwarded-proto' başlığından öğreniriz
     const protocol = requestHeaders.get('x-forwarded-proto') ?? 'http';
     const baseUrl = `${protocol}://${host}`;
 
