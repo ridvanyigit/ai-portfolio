@@ -4,7 +4,7 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
 
-    // 1️⃣ Google Apps Script'e JSON gönder
+    // Google Apps Script'e JSON gönder
     const scriptUrl =
       "https://script.google.com/macros/s/AKfycbyhWIr1KHeInHbvI-LdFjb7pNZTFTarrE27kWwNLO-dmx1GSHHcm0OJ5xJAOt-3WNV4/exec";
 
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Failed to submit form" }, { status: 500 });
     }
 
-    // 2️⃣ Pushover bildirimi gönder (Doğru ve hatasız yöntem)
+    // Pushover bildirimi gönder
     const requestHeaders = req.headers;
     const host = requestHeaders.get('host');
     const protocol = requestHeaders.get('x-forwarded-proto') ?? 'http';
