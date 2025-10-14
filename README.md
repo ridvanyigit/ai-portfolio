@@ -1,4 +1,4 @@
-<table width="100%">
+<table width="100%" align="center">
   <tr>
     <td align="center">
       <h1 style="margin: 0;">Rıdvan Yiğit - AI Engineer Portfolio</h1>
@@ -105,7 +105,8 @@ Follow these steps to set up and run the project locally.
 
 ```bash
 git clone https://github.com/ridvanyigit/ai-portfolio.git
-cd ai-portfolio```
+cd ai-portfolio
+```
 
 #### 2. Install Dependencies
 
