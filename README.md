@@ -150,4 +150,31 @@ The application will be available at `http://localhost:3000`.
 
 ---
 
+### **Project Refinements & Challenges Solved**
+
+During the integration of the AWS-powered chatbot, several key technical challenges were identified and resolved to ensure production-grade stability and functionality.
+
+#### 1. Restoring Chatbot Statefulness (Memory)
+
+*   **The Problem:** The chatbot embedded in the portfolio site appeared stateless. It could not remember previous messages in a conversation (e.g., the user's name), even though the backend was designed to handle session-based memory.
+*   **The Diagnosis:** The Vercel Next.js frontend was not persisting the `session_id` returned by the AWS backend. Each new message sent from the portfolio's UI was initiating a brand-new, empty conversation on the backend.
+*   **The Solution:**
+    1.  State management was implemented in the `FloatingChatbot.tsx` React component. It now captures the `session_id` from the initial backend response.
+    2.  This captured `session_id` is now included in the body of every subsequent `fetch` request to the `/api/chat` endpoint.
+    3.  The `/api/chat` route on Vercel was updated to correctly proxy this `session_id` to the AWS Lambda function, ensuring the backend could retrieve the correct conversation history from S3.
+
+#### 2. Fixing Serverless-to-Serverless API Calls for Notifications
+
+*   **The Problem:** Contact form submissions were correctly saved to Google Sheets, but the Pushover notification system, designed to alert the site owner, was failing silently.
+*   **The Diagnosis:** The `/api/contact` serverless function was attempting to call the `/api/notify` endpoint using a hardcoded `localhost` address. This fails in a deployed serverless environment where `localhost` is meaningless.
+*   **The Solution:** The API call inside `app/api/contact/route.ts` was refactored. It now dynamically constructs the absolute URL by reading the `host` and `protocol` from the incoming request headers. This ensures that the function always calls its own public-facing API endpoint, making it environment-agnostic.
+
+#### 3. Enhancing User Interface (UI) Accessibility
+
+*   **The Problem:** The floating chatbot icon was nearly invisible when the website was in "light mode," as its background color blended in with the page's background.
+*   **The Solution:** The button styling in `FloatingChatbot.tsx` was modified to use a static, high-contrast background color (a shade of indigo). This guarantees the icon is prominent and easily accessible for all users, regardless of the selected theme (light or dark).
+
+
+---
+
 *Feel free to fork this repository or reach out if you have any questions!*
