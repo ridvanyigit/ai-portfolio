@@ -36,7 +36,7 @@ This repository contains the source code for my personal portfolio website, **[r
 - **Serverless API Endpoints**: Uses Next.js API Routes on Vercel to proxy requests and handle integrations securely.
 - **Contact Form Integration**: A contact form that saves submissions to Google Sheets and sends real-time push notifications via Pushover.
 - **Fully Responsive & Themed**: Features a fluid design that works on all devices, complete with a dark/light mode toggle.
-- **Smooth Animations**: Engaging user experience with animations powered by Framer Motion.
+- **Smooth Animations**: Engaging user experience with animations powered by Framer Motion..
 
 ---
 
