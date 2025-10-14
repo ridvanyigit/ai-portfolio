@@ -105,7 +105,8 @@ Follow these steps to set up and run the project locally.
 
 ```bash
 git clone https://github.com/ridvanyigit/ai-portfolio.git
-cd ai-portfolio```
+cd ai-portfolio
+```
 
 #### 2. Install Dependencies
 
