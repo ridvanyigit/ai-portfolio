@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#0a1a3f", // Lacivert
+          DEFAULT: "#0a1a3f", // Blue
           light: "#1e3a8a",
         },
         accent: {
-          DEFAULT: "#f97316", // Turuncu CTA rengi
+          DEFAULT: "#f97316", // Orange CTA
         },
       },
     },

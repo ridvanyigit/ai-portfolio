@@ -22,16 +22,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        {/* Üst sabit navbar */}
+        {/* Fixed top navbar */}
         <Navbar />
 
-        {/* Sayfa içeriği */}
+        {/* Page content */}
         <div className="pt-16">{children}</div>
 
-        {/* Sağ altta sabit chatbot ikonu + iframe */}
+        {/* Fixed chatbot icon + iframe at bottom right */}
         <FloatingChatbot />
 
-        {/* Footer en altta */}
+        {/* Footer at the bottom */}
         <Footer />
       </body>
     </html>

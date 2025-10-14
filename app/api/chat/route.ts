@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     const reply = data.response ?? "";
     const sessionId = data.session_id ?? "";
 
-    // Kullanıcı iletişim bilgisi girdiyse veya cevap boşsa bildir
+    // Notify if the user has entered contact information or if the response is empty
     const isContactInfo = /\b(\+?\d{6,}|\S+@\S+\.\S+|linkedin\.com|twitter\.com|https?:\/\/)/i.test(
       body.message
     );
