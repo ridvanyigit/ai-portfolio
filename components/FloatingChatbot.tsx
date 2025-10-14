@@ -30,7 +30,7 @@ export default function FloatingChatbot() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         message: input,
-        session_id: sessionId, // Send the current session_id
+        session_id: sessionId,
       }),
     });
 
@@ -40,7 +40,6 @@ export default function FloatingChatbot() {
       setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
     }
     
-    // Update session_id with the one from the backend
     if (data.session_id) {
       setSessionId(data.session_id);
     }
@@ -50,7 +49,7 @@ export default function FloatingChatbot() {
     <>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-6 right-6 bg-accent text-white p-3 rounded-full shadow-lg hover:scale-110 transition z-50"
+        className="fixed bottom-6 right-6 bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:bg-indigo-700 hover:scale-110 transition z-50"
       >
         <MessageCircle className="w-6 h-6" />
       </button>
