@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MessageCircle, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,14 @@ export default function FloatingChatbot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
   const [input, setInput] = useState("");
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(scrollToBottom, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -17,15 +25,25 @@ export default function FloatingChatbot() {
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
 
-    // Burada ister kendi /api/chat endpoint'ine, ister AWS API'na fetch atarsın
     const res = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: input }),
+      body: JSON.stringify({
+        message: input,
+        session_id: sessionId, // Send the current session_id
+      }),
     });
 
     const data = await res.json();
-    setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
+    
+    if (data.reply) {
+      setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
+    }
+    
+    // Update session_id with the one from the backend
+    if (data.session_id) {
+      setSessionId(data.session_id);
+    }
   };
 
   return (
@@ -50,14 +68,15 @@ export default function FloatingChatbot() {
               messages.map((m, i) => (
                 <div
                   key={i}
-                  className={`mb-2 text-sm ${
-                    m.role === "user" ? "text-right text-indigo-500" : "text-left text-foreground"
-                  }`}
+                  className={`flex items-end gap-2 mb-3 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  {m.content}
+                  <div className={`p-3 rounded-lg max-w-xs ${m.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
+                    {m.content}
+                  </div>
                 </div>
               ))
             )}
+            <div ref={messagesEndRef} />
           </div>
 
           <div className="p-2 border-t flex gap-2">

@@ -6,12 +6,16 @@ export async function POST(req: Request) {
     const backendUrl =
       "https://ibr76ppxgz6wb27vhzlepl6ylq0lrplf.lambda-url.eu-central-1.on.aws/chat";
 
+    // Pass the session_id from the frontend to the AWS backend
     const response = await fetch(backendUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: body.message }),
+      body: JSON.stringify({ 
+        message: body.message,
+        session_id: body.session_id 
+      }),
     });
 
     if (!response.ok) {
