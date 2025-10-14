@@ -4,7 +4,7 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
 
-    // 1️⃣ Google Apps Script'e JSON gönder (Bu kısım zaten çalışıyor)
+    // 1️⃣ Google Apps Script'e JSON gönder
     const scriptUrl =
       "https://script.google.com/macros/s/AKfycbyhWIr1KHeInHbvI-LdFjb7pNZTFTarrE27kWwNLO-dmx1GSHHcm0OJ5xJAOt-3WNV4/exec";
 
@@ -19,18 +19,19 @@ export async function POST(req: Request) {
     if (!sheetResponse.ok) {
       const errorText = await sheetResponse.text();
       console.error("Google Sheet error:", errorText);
-      // Pushover'a gitmeden burada duracağı için bildirim hatası almazsınız.
       return NextResponse.json({ error: "Failed to submit form" }, { status: 500 });
     }
 
-    // 2️⃣ Pushover bildirimi gönder (Düzeltilmiş kısım)
+    // 2️⃣ Pushover bildirimi gönder (Doğru ve hatasız yöntem)
     
-    // Ortama göre doğru base URL'i belirle
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}` // Vercel'de çalışıyorsa
-      : process.env.NEXT_PUBLIC_BASE_URL;  // Yerelde çalışıyorsa
+    // Gelen isteğin kendi başlıklarını (headers) kullan
+    const requestHeaders = req.headers;
+    const host = requestHeaders.get('host');
+    // Vercel'in hangi protokolü kullandığını 'x-forwarded-proto' başlığından öğreniriz
+    const protocol = requestHeaders.get('x-forwarded-proto') ?? 'http';
+    const baseUrl = `${protocol}://${host}`;
 
-    await fetch(`${baseUrl}/api/notify`, {
+    const notifyResponse = await fetch(`${baseUrl}/api/notify`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -38,6 +39,11 @@ export async function POST(req: Request) {
         message: `Name: ${data.name}\nEmail: ${data.email}\nMessage: ${data.message}`,
       }),
     });
+
+    if (!notifyResponse.ok) {
+      const errorBody = await notifyResponse.text();
+      console.error("Pushover notification failed inside /api/contact:", errorBody);
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
