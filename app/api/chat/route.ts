@@ -4,7 +4,8 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const backendUrl =
-      "https://ibr76ppxgz6wb27vhzlepl6ylq0lrplf.lambda-url.eu-central-1.on.aws/chat";
+      // "https://ibr76ppxgz6wb27vhzlepl6ylq0lrplf.lambda-url.eu-central-1.on.aws/chat";    MANUEL
+      "https://r4xvounyh2.execute-api.eu-central-1.amazonaws.com/chat";      // TERRAFORM
 
     // Pass the session_id from the frontend to the AWS backend
     const response = await fetch(backendUrl, {
