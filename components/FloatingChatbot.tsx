@@ -1,5 +1,3 @@
-// /components/FloatingChatbot.tsx - DÜZELTİLMİŞ KOD
-
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -83,7 +81,6 @@ export default function FloatingChatbot() {
               <Bot className="w-5 h-5 text-white" />
             </div>
             <div>
-              {/* HATA BURADAYDI, DÜZELTİLDİ: */}
               <h2 className="text-base font-bold">Rıdvan&apos;s Assistant</h2>
               <p className="text-xs text-muted-foreground">AI-powered support</p>
             </div>
