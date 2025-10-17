@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const backendUrl =
-      "https://xrw1mt1a0l.execute-api.eu-central-1.amazonaws.com/chat";
+      "https://emkp05qg5m.execute-api.eu-central-1.amazonaws.com/chat";
 
     // Pass the session_id from the frontend to the AWS backend
     const response = await fetch(backendUrl, {
