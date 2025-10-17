@@ -1,41 +1,35 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, Send, Bot, User, X } from "lucide-react";
+// DİKKAT: Kullanılmayan 'Bot' ve 'User' ikonlarını import satırından kaldırdık.
+import { MessageCircle, Send, X } from "lucide-react"; 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-// Mesaj arayüzü tipi
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
 export default function FloatingChatbot() {
-  // Pencerenin açık/kapalı durumu için state
   const [open, setOpen] = useState(false);
-
-  // Sohbet arayüzünün state'leri
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Sohbeti en alta kaydırma fonksiyonu
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    // Sadece pencere açıkken sohbeti kaydır
     if (open) {
       scrollToBottom();
     }
   }, [messages, isLoading, open]);
 
-  // Mesaj gönderme fonksiyonu
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -77,7 +71,6 @@ export default function FloatingChatbot() {
 
   return (
     <>
-      {/* 1. SAĞ ALTTAKİ CHATBOT İKONU */}
       <button
         onClick={() => setOpen((o) => !o)}
         className="fixed bottom-6 right-6 bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:scale-110 transition z-50 hover:bg-indigo-700"
@@ -86,17 +79,16 @@ export default function FloatingChatbot() {
         {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
       </button>
 
-      {/* 2. İKONA TIKLANDIĞINDA AÇILAN KÜÇÜK PENCERE */}
       {open && (
         <div className="fixed bottom-20 right-6 w-[400px] max-w-[90vw] h-[600px] max-h-[80vh] bg-background rounded-xl shadow-2xl border flex flex-col overflow-hidden z-50">
           
-          {/* BU PENCERENİN İÇİNDEKİ AVATARLI VE ŞIK ARAYÜZ */}
           <div className="p-4 border-b font-semibold bg-muted flex items-center gap-3">
              <div className="relative w-10 h-10">
                 <Image src="/avatar.png" alt="Assistant Avatar" layout="fill" className="rounded-full" />
              </div>
             <div>
-              <h2 className="text-base font-bold">Rıdvan's Assistant</h2>
+              {/* DİKKAT: ' işaretini &apos; ile değiştirdik. */}
+              <h2 className="text-base font-bold">Rıdvan&apos;s Assistant</h2>
               <p className="text-xs text-muted-foreground">AI-powered digital twin</p>
             </div>
           </div>
