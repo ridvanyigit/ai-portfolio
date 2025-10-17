@@ -120,3 +120,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .font-nabla-effect {
+    font-variation-settings:
+      "EDPT" 100,
+      "EHLT" 12;
+  }
+}

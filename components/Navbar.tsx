@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full backdrop-blur bg-background/70 border-b border-border z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-        <Link href="/" className="font-bold text-lg">
+        <Link href="/" className="font-signature font-nabla-effect text-4xl">
           Rıdvan Yiğit
         </Link>
         <div className="flex items-center gap-4">

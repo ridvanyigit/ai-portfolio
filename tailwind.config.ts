@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        signature: ['Nabla', 'system-ui'],
+      },
       colors: {
         brand: {
           DEFAULT: "#0a1a3f", // Blue
