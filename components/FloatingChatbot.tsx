@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-// DİKKAT: Kullanılmayan 'Bot' ve 'User' ikonlarını import satırından kaldırdık.
-import { MessageCircle, Send, X } from "lucide-react"; 
+import { MessageCircle, Send, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -87,7 +86,6 @@ export default function FloatingChatbot() {
                 <Image src="/avatar.png" alt="Assistant Avatar" layout="fill" className="rounded-full" />
              </div>
             <div>
-              {/* DİKKAT: ' işaretini &apos; ile değiştirdik. */}
               <h2 className="text-base font-bold">Rıdvan&apos;s Assistant</h2>
               <p className="text-xs text-muted-foreground">AI-powered digital twin</p>
             </div>
@@ -95,9 +93,18 @@ export default function FloatingChatbot() {
 
           <div className="flex-grow p-4 overflow-y-auto space-y-4">
             {messages.length === 0 ? (
-              <div className="text-center text-muted-foreground text-sm mt-10 px-4">
+              // --- DEĞİŞİKLİK BURADA ---
+              <div className="text-center text-muted-foreground text-sm mt-10 px-4 flex flex-col items-center">
+                <Image
+                    src="/avatar.png"
+                    alt="Rıdvan Yiğit"
+                    width={72} // w-18
+                    height={72} // h-18
+                    className="rounded-full mb-4 border-2 border-border"
+                />
                 <p>Hello! I’m Rıdvan’s digital assistant. Ask me anything about his projects, skills, or experience.</p>
               </div>
+              // --- DEĞİŞİKLİK BİTTİ ---
             ) : (
               messages.map((m, i) => (
                 <div key={i} className={`flex gap-3 items-end ${m.role === "user" ? "justify-end" : "justify-start"}`}>
