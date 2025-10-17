@@ -87,13 +87,12 @@ export default function FloatingChatbot() {
              </div>
             <div>
               <h2 className="text-base font-bold">Rıdvan&apos;s Assistant</h2>
-              <p className="text-xs text-muted-foreground">AI-powered digital twin</p>
+              <p className="text-xs text-muted-foreground">Your gateway to his expertise</p>
             </div>
           </div>
 
           <div className="flex-grow p-4 overflow-y-auto space-y-4">
             {messages.length === 0 ? (
-              // --- DEĞİŞİKLİK BURADA ---
               <div className="text-center text-muted-foreground text-sm mt-10 px-4 flex flex-col items-center">
                 <Image
                     src="/avatar.png"
@@ -102,9 +101,8 @@ export default function FloatingChatbot() {
                     height={72} // h-18
                     className="rounded-full mb-4 border-2 border-border"
                 />
-                <p>Hello! I’m Rıdvan’s digital assistant. Ask me anything about his projects, skills, or experience.</p>
+                <p>Hi 👋 I’m Robin’s digital assistant. Ask me anything about his work, projects, or AI solutions — I’m here to help you explore his expertise.</p>
               </div>
-              // --- DEĞİŞİKLİK BİTTİ ---
             ) : (
               messages.map((m, i) => (
                 <div key={i} className={`flex gap-3 items-end ${m.role === "user" ? "justify-end" : "justify-start"}`}>

@@ -11,6 +11,9 @@ const skills = [
   "Python",
   "FastAPI",
   "RAG",
+  "AI Chatbot",
+  "AI Agents",
+  "Workflow Automation",
   "Multi-Agent Systems",
 ];
 
