@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { MessageCircle, Send, Bot, User, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface Message {
   role: "user" | "assistant";
@@ -101,8 +102,8 @@ export default function FloatingChatbot() {
                   }`}
                 >
                   {m.role === "assistant" && (
-                    <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Bot className="w-5 h-5 text-white" />
+                    <div className="w-8 h-8 rounded-full flex-shrink-0 overflow-hidden">
+                      <Image src="/avatar.png" alt="Assistant Avatar" width={32} height={32} />
                     </div>
                   )}
 
