@@ -101,7 +101,7 @@ export default function FloatingChatbot() {
                     height={72} // h-18
                     className="rounded-full mb-4 border-2 border-border"
                 />
-                <p>Hi 👋 I’m Robin’s digital assistant. Ask me anything about his work, projects, or AI solutions — I’m here to help you explore his expertise.</p>
+                <p>Hi 👋 I’m Ridvan’s digital assistant. Ask me anything about his work, projects, or AI solutions — I’m here to help you explore his expertise.</p>
               </div>
             ) : (
               messages.map((m, i) => (
