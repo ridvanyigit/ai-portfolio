@@ -1,14 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, ArrowUpRight } from "lucide-react"; // ArrowUpRight ikonunu import ediyoruz
 
+// 1. Project interface'ine 'url' ekledik (isteğe bağlı)
 interface Project {
   title: string;
   details: string;
+  url?: string;
 }
 
 const projects: Project[] = [
+  // YENİ PROJE BURAYA EKLENDİ
+  {
+    title: "Secure & Automated Form Data Pipeline",
+    details: `
+A fully self-hosted system I developed to eliminate dependency on third-party form services. When a user submits a form on the website, an n8n workflow, secured by a Cloudflare Tunnel, instantly processes the data. The data is archived in a PostgreSQL database, mirrored to Google Sheets for analysis, and I receive an instant notification confirming the outcome of the transaction.
+
+Tech Stack: Docker, n8n, PostgreSQL, Cloudflare.
+    `,
+    url: "https://github.com/ridvanyigit/self-hosted-business-hub/blob/main/README.md#-t%C3%BCrk%C3%A7e-versiyon",
+  },
   {
     title: "Intelligent Web Summarization Tool",
     details: `
@@ -132,7 +144,22 @@ export default function ProjectsSection() {
               className="flex justify-between items-center cursor-pointer"
               onClick={() => toggle(index)}
             >
-              <h3 className="font-semibold text-lg">{project.title}</h3>
+              {/* 3. Başlığı linke dönüştüren mantık */}
+              {project.url ? (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()} // Detayların açılmasını engeller
+                  className="font-semibold text-lg hover:underline hover:text-indigo-500 group"
+                >
+                  {project.title}
+                  <ArrowUpRight className="inline-block w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </a>
+              ) : (
+                <h3 className="font-semibold text-lg">{project.title}</h3>
+              )}
+              
               {openIndex === index ? (
                 <ChevronUp className="w-5 h-5" />
               ) : (
