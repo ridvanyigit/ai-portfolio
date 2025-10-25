@@ -10,7 +10,7 @@ export default function ImpressumPage() {
       <p><strong>Web:</strong> www.ridvanyigit.com</p>
 
       {/* <p className="mt-4"><strong>UID-Nummer:</strong> ATU12345678</p> */}
-      <p className="mt-4"><strong>Steuernummer:</strong> ATU12345678</p>
+      <p className="mt-4"><strong>Steuernummer:</strong> 03 796/2073</p>
       <p><strong>Mitglied der Wirtschaftskammer Wien</strong></p>
       <p><strong>Aufsichtsbehörde:</strong> Magistratisches Bezirksamt Wien</p>
 

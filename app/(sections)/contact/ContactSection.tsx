@@ -12,7 +12,8 @@ export default function ContactSection() {
     const formData = Object.fromEntries(new FormData(form));
 
     try {
-      const res = await fetch("https://workflows.ridvanyigit.com/webhook/formspree-webhook", {
+        //const res = await fetch("/api/contact", {                                                      // orijinal: n8n otomasyonunu kapatinca bunu aktiflestir
+        const res = await fetch ("https://workflows.ridvanyigit.com/webhook/formspree-webhook", {        // n8n webhook
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
