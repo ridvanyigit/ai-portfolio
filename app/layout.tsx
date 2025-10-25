@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingChatbot from "@/components/FloatingChatbot";
+import Script from "next/script"; // GA4 için gerekli
 
 export const metadata: Metadata = {
   title: "Rıdvan Yiğit | AI Engineer Portfolio",
-  description: "Portfolio website showcasing AI Engineering, Agentic Systems, and Generative AI projects.",
+  description:
+    "Portfolio website showcasing AI Engineering, Agentic Systems, and Generative AI projects.",
   openGraph: {
     title: "Rıdvan Yiğit | AI Engineer Portfolio",
     description: "AI Engineer specializing in Agentic AI, RAG, and autonomous systems.",
@@ -24,7 +26,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Nabla&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nabla&display=swap"
+          rel="stylesheet"
+        />
+
+        {/* GA4 Tag */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-VR1KYMRE4P"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-VR1KYMRE4P');
+          `}
+        </Script>
       </head>
       <body>
         {/* Fixed top navbar */}
