@@ -13,10 +13,10 @@ export default function ContactSection() {
 
     try {
         //const res = await fetch("/api/contact", {                                                      // orijinal: n8n otomasyonunu kapatinca bunu aktiflestir
-        const res = await fetch ("https://workflows.ridvanyigit.com/webhook/formspree-webhook", {        // n8n webhook
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        const res = await fetch("https://formspree.io/f/xldlqwpp", { // Formspree URL
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
       });
 
       if (res.ok) {
