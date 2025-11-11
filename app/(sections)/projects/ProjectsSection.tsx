@@ -11,19 +11,6 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "AI Act Assistant — Full-Stack SaaS Platform",
-    details: `
-I engineered an enterprise-ready SaaS platform to demystify the complex EU AI Act, transforming a dense legal document into an accessible, interactive knowledge base. This full-stack application provides users with instant, AI-powered answers through an intuitive chat interface.
-
-The platform supports the complete commercial user lifecycle: secure sign-up via Clerk, an automated 14-day trial, and a seamless transition to a paid subscription managed by Stripe, including a self-service customer portal for subscription management. The core of the system is an advanced Retrieval-Augmented Generation (RAG) pipeline, which guarantees that all AI-generated responses are factually grounded in the official legal text, eliminating the risk of hallucination.
-
-Built on a cost-effective hybrid architecture, the decoupled frontend (Next.js) and backend (FastAPI) are containerized with Docker. Secure, real-time communication for payment and user registration events is handled via webhooks protected by a Cloudflare Tunnel, ensuring a robust and reliable system from development to production.
-
-Tech Stack: Next.js (React), FastAPI (Python), PostgreSQL, Docker, OpenAI, ChromaDB, Sentence Transformers, Stripe, Clerk, Cloudflare.
-    `,
-    url: "", // Add your GitHub URL here if you have one
-  },
-  {
     title: "self-hosted-business-hub",
     details: `
 A fully self-hosted system I developed to eliminate dependency on third-party form services. When a user submits a form on the website, an n8n workflow, secured by a Cloudflare Tunnel, instantly processes the data. The data is archived in a PostgreSQL database, mirrored to Google Sheets for analysis, and I receive an instant notification confirming the outcome of the transaction.
