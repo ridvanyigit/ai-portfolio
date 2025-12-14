@@ -5,7 +5,6 @@ export default function ImpressumPage() {
 
       <p><strong>Unternehmensname:</strong> Rıdvan Yiğit </p>
       <p><strong>Adresse:</strong> Kühgasse 8/9, 1110 Wien, Österreich</p>
-      <p><strong>Telefon:</strong> +43 676 7901988</p>
       <p><strong>E-Mail:</strong> ridvanyigit@gmx.net</p>
       <p><strong>Web:</strong> www.ridvanyigit.com</p>
 
