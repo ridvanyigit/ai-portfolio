@@ -1,38 +1,27 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, Send, X } from "lucide-react";
+import { MessageCircle, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-}
 
 export default function FloatingChatbot() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [sessionId, setSessionId] = useState<string>(""); 
+  
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   useEffect(() => {
-    if (open) {
-      scrollToBottom();
-    }
-  }, [messages, isLoading, open]);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
-    const userMsg: Message = { role: "user", content: input };
+    const userMsg = { role: "user", content: input };
     setMessages((prev) => [...prev, userMsg]);
     const currentInput = input;
     setInput("");
@@ -42,27 +31,26 @@ export default function FloatingChatbot() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: currentInput,
-          session_id: sessionId,
-        }),
+        body: JSON.stringify({ message: currentInput, session_id: sessionId }),
       });
 
-      if (!res.ok) throw new Error("API request failed");
-
+      if (!res.ok) {
+        throw new Error(`API error: ${res.statusText}`);
+      }
+      
       const data = await res.json();
+      
       if (data.session_id && !sessionId) {
         setSessionId(data.session_id);
       }
-      const assistantMsg: Message = { role: "assistant", content: data.reply };
-      setMessages((prev) => [...prev, assistantMsg]);
+
+      const assistantMessage = { role: "assistant", content: data.reply || "Sorry, I couldn't get a response." };
+      setMessages((prev) => [...prev, assistantMessage]);
+
     } catch (error) {
-      console.error("Failed to send message:", error);
-      const errorMsg: Message = {
-        role: "assistant",
-        content: "Sorry, I encountered an error. Please try again.",
-      };
-      setMessages((prev) => [...prev, errorMsg]);
+      console.error("Chat error:", error);
+      const errorMessage = { role: "assistant", content: "Something went wrong. Please try again." };
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
@@ -72,77 +60,55 @@ export default function FloatingChatbot() {
     <>
       <button
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-6 right-6 bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:scale-110 transition z-50 hover:bg-indigo-700"
-        aria-label="Toggle Chatbot"
+        className="fixed bottom-6 right-6 bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:scale-110 transition z-50"
       >
-        {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+        <MessageCircle className="w-6 h-6" />
       </button>
 
       {open && (
-        <div className="fixed bottom-20 right-6 w-[400px] max-w-[90vw] h-[600px] max-h-[80vh] bg-background rounded-xl shadow-2xl border flex flex-col overflow-hidden z-50">
-          
-          <div className="p-4 border-b font-semibold bg-muted flex items-center gap-3">
-             <div className="relative w-10 h-10">
-                <Image src="/avatar.png" alt="Assistant Avatar" layout="fill" className="rounded-full" />
-             </div>
-            <div>
-              <h2 className="text-base font-bold">Rıdvan&apos;s Assistant</h2>
-              <p className="text-xs text-muted-foreground">Your gateway to his expertise</p>
-            </div>
-          </div>
+        <div className="fixed bottom-20 right-6 w-[380px] max-w-[90vw] h-[500px] max-h-[80vh] bg-background rounded-lg shadow-xl border flex flex-col overflow-hidden z-50">
+          <div className="p-3 border-b font-semibold bg-muted">Rıdvan Yiğit’s Assistant</div>
 
-          <div className="flex-grow p-4 overflow-y-auto space-y-4">
+          <div className="flex-grow p-3 overflow-y-auto">
             {messages.length === 0 ? (
-              <div className="text-center text-muted-foreground text-sm mt-10 px-4 flex flex-col items-center">
-                <Image
-                    src="/avatar.png"
-                    alt="Rıdvan Yiğit"
-                    width={72} // w-18
-                    height={72} // h-18
-                    className="rounded-full mb-4 border-2 border-border"
-                />
-                <p>Hi 👋 I’m Ridvan’s digital assistant. Ask me anything about his work, projects, or AI solutions — I’m here to help you explore his expertise.</p>
-              </div>
+              <p className="text-muted-foreground text-center text-sm mt-10">
+                👋 Hello! I’m Rıdvan’s digital assistant. Ask me anything about my services, projects, or how we can collaborate.
+              </p>
             ) : (
               messages.map((m, i) => (
-                <div key={i} className={`flex gap-3 items-end ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                  {m.role === "assistant" && (
-                    <div className="w-8 h-8 rounded-full flex-shrink-0 overflow-hidden relative">
-                      <Image src="/avatar.png" alt="Assistant Avatar" layout="fill" />
-                    </div>
-                  )}
-                  <div className={`max-w-[85%] rounded-2xl p-3 text-sm ${ m.role === "user" ? "bg-indigo-600 text-white rounded-br-none" : "bg-muted text-foreground rounded-bl-none" }`}>
-                    <p className="whitespace-pre-wrap">{m.content}</p>
+                <div
+                  key={i}
+                  className={`mb-3 flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  <div
+                    className={`p-3 rounded-lg text-sm max-w-[80%] ${
+                      m.role === "user" ? "bg-indigo-600 text-white" : "bg-muted text-foreground"
+                    }`}
+                  >
+                    {m.content}
                   </div>
                 </div>
               ))
             )}
             {isLoading && (
-               <div className="flex gap-3 items-end">
-                  <div className="w-8 h-8 rounded-full flex-shrink-0 overflow-hidden relative">
-                    <Image src="/avatar.png" alt="Assistant Avatar" layout="fill" />
-                  </div>
-                  <div className="bg-muted rounded-2xl p-3 rounded-bl-none">
-                    <div className="flex space-x-1.5">
-                      <div className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce" />
-                      <div className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce delay-100" />
-                      <div className="w-1.5 h-1.5 bg-foreground/50 rounded-full animate-bounce delay-200" />
-                    </div>
-                  </div>
+              <div className="mb-3 flex justify-start">
+                <div className="p-3 rounded-lg text-sm bg-muted text-foreground flex gap-1 items-center">
+                  <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
+                  <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></span>
+                  <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></span>
+                </div>
               </div>
             )}
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="p-3 border-t flex gap-2 bg-background">
+          <div className="p-2 border-t flex gap-2">
             <Input
-              placeholder="Ask me anything..."
+              placeholder="Type your message..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               disabled={isLoading}
-              className="flex-1"
-              autoFocus
             />
             <Button type="button" onClick={sendMessage} disabled={isLoading || !input.trim()}>
               <Send className="w-4 h-4" />
