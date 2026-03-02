@@ -28,7 +28,7 @@ export default function AboutSection() {
           <br />          
           Living in Vienna shapes my professional ethos—combining innovation with European standards of quality and privacy. I view every project as a partnership, committed to delivering precision, transparency, and measurable value.
           <br />
-          <strong>Beyond the Code:</strong>
+          <strong className="block text-left mt-2">Beyond the Code:</strong>
           <br />
           Strategy and creativity fuel my work. I am a competitive chess player (1900 Elo) and a musician playing both violin and guitar. Whether on the chessboard or in a codebase, I thrive on discipline, foresight, and the art of solving complex problems elegantly.
           <br />
