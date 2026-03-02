@@ -83,7 +83,7 @@ export default function FloatingChatbot() {
             </div>
             <div>
               <h2 className="text-base font-bold">Rıdvan&apos;s Assistant</h2>
-              <p className="text-xs text-muted-foreground">AI-powered support</p>
+              <p className="text-xs text-muted-foreground">Autonomous AI Agent</p>
             </div>
           </div>
 
@@ -97,7 +97,7 @@ export default function FloatingChatbot() {
                     height={80}
                     className="mx-auto mb-4 rounded-full"
                   />
-                <p>Hello! I’m Rıdvan’s digital assistant. Feel free to ask about my projects, skills, or collaboration opportunities.</p>
+                <p>Hello! I am Rıdvan's autonomous digital twin. I have full access to his professional background, technical stack, and project portfolio. Ask me anything about how we can build scalable AI systems together.</p>
               </div>
             ) : (
               messages.map((m, i) => (
