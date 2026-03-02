@@ -22,15 +22,15 @@ export default function AboutSection() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="text-lg text-muted-foreground leading-relaxed text-center max-w-3xl mx-auto"
         >
-          I’m an AI Engineer based in Vienna, blending deep technical expertise with a perfectionist mindset. For the past five years, I’ve specialized in Large Language Model (LLM) Engineering, working end-to-end — from research to production — to deliver reliable, intelligent, and scalable solutions.
+          I am an MSc AI Engineer and Systems Architect based in Vienna, bridging the gap between advanced academic research and scalable production systems. For over five years, I have specialized in designing autonomous AI agents, RAG pipelines, and intelligent automation flows that solve complex business challenges.
           <br />
-          My core focus areas include RAG pipelines, MLOps, fine-tuning, autonomous AI agents, and chatbot development. I design and integrate intelligent assistants into modern web platforms, and I build automation flows using tools like n8n, OpenAI, AWS, and Vercel to bring advanced AI capabilities into real-world systems.
+          My approach goes beyond writing code; I engineer end-to-end solutions. From fine-tuning Large Language Models (LLMs) to deploying serverless architectures on AWS and creating seamless frontends with Next.js, I handle the entire lifecycle of an AI product. I leverage tools like n8n and OpenAI to build systems that are not just smart, but reliable and business-critical.
           <br />          
-          What truly sets my work apart is the way I approach it: with precision, dedication, and genuine respect for the craft. I see every project as an opportunity to create something exceptional — where quality, trust, and collaboration come first. This mindset has made me a reliable partner for individuals, SMBs, and enterprises seeking tailored AI solutions.
+          Living in Vienna shapes my professional ethos—combining innovation with European standards of quality and privacy. I view every project as a partnership, committed to delivering precision, transparency, and measurable value.
           <br />
-          Living in Vienna — a city that embodies both tradition and innovation — shapes my perspective. I value European standards of quality, cultural diversity, and forward-thinking approaches, all of which reflect in the solutions I deliver.
+          Beyond the Code:
+          Strategy and creativity fuel my work. I am a competitive chess player (1900 Elo) and a musician playing both violin and guitar. Whether on the chessboard or in a codebase, I thrive on discipline, foresight, and the art of solving complex problems elegantly.
           <br />
-          Beyond work, I’m passionate about travel, classical music, and chess. I play both violin and guitar, and I regularly compete in chess tournaments, holding a 1900 Elo rating. These passions keep me curious, disciplined, and creatively engaged — qualities that naturally extend into my professional life.
         </motion.p>
       </div>
     </section>
