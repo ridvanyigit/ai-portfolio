@@ -3,49 +3,57 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { message, session_id } = body;
-    const currentSessionId = session_id || crypto.randomUUID();
+    const backendUrl =
+      "https://ibr76ppxgz6wb27vhzlepl6ylq0lrplf.lambda-url.eu-central-1.on.aws/chat";
 
-    // .env.local dosyasındaki bilgileri alıyoruz
-    const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || "http://127.0.0.1:5678/webhook/chat";
-    const n8nApiKey = process.env.N8N_API_KEY!;
-
-    const response = await fetch(n8nWebhookUrl, {
+    const response = await fetch(backendUrl, {
       method: "POST",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
-        "x-n8n-api-key": n8nApiKey // İŞTE EKSİK OLAN ŞİFRE KİLİDİ BURASIYDI!
       },
-      body: JSON.stringify({
-        chatInput: message,
-        session_id: currentSessionId,
-      }),
+      body: JSON.stringify({ message: body.message }),
     });
 
-    // Eğer n8n Forbidden (403) veya başka hata verirse:
     if (!response.ok) {
-      console.error("n8n bağlantıyı reddetti. Durum:", response.status);
-      return NextResponse.json({ reply: "n8n error: " + response.statusText });
+      const errorText = await response.text();
+      console.error("AWS Chat API error:", errorText);
+      await sendNotification("Chatbot API Error", errorText);
+      return NextResponse.json({ error: "Chatbot API failed" }, { status: 500 });
     }
 
-    // n8n'den gelen cevabı DÜZ METİN olarak alıyoruz
-    const replyText = await response.text();
+    const data = await response.json();
 
-    if (!replyText || replyText.trim() === "") {
-      return NextResponse.json({ 
-        reply: "n8n çalışıyor ama Agent cevap üretemedi.", 
-        session_id: currentSessionId 
-      });
+    const reply = data.response ?? "";
+    const sessionId = data.session_id ?? "";
+
+    // Kullanıcı iletişim bilgisi girdiyse veya cevap boşsa bildir
+    const isContactInfo = /\b(\+?\d{6,}|\S+@\S+\.\S+|linkedin\.com|twitter\.com|https?:\/\/)/i.test(
+      body.message
+    );
+
+    if (!reply || isContactInfo) {
+      await sendNotification(
+        isContactInfo ? "New Contact Info" : "Unanswered Chat Message",
+        body.message
+      );
     }
 
-    // Başarılı Cevap!
-    return NextResponse.json({ 
-      reply: replyText, 
-      session_id: currentSessionId 
-    });
-
+    return NextResponse.json({ reply, session_id: sessionId });
   } catch (err) {
     console.error("Chat route error:", err);
-    return NextResponse.json({ reply: "System Error. Check terminal." }, { status: 500 });
+    await sendNotification("Chat Route Error", String(err));
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
+async function sendNotification(title: string, message: string) {
+  try {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/notify`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, message }),
+    });
+  } catch (e) {
+    console.error("Pushover send error:", e);
   }
 }
